@@ -15,7 +15,7 @@ while i<ileliczb :
 		liczby.append(liczba)
 		i = i + 1
 		
-print("Wylosowane liczby to : ",liczby)
+#print("Wylosowane liczby to : ",liczby)
 
 print("Wytypuj", ileliczb, "z", maksliczba, "liczb")
 typy=set()
@@ -28,7 +28,8 @@ while i<ileliczb :
 		typy.add(typ)
 		i = i + 1
 
-print(typy)
+print("Wylosowane liczby : ",liczby)
+print("Wytypowane liczby :",typy)
 trafione = set(liczby) & typy
 
 if len(trafione)>0 :
