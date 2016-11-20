@@ -1,49 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import random
+from totomodul import ustawienia, losujliczby, pobierztypy
 
-try :
-	
-	ileliczb = int(input("Podaj ile liczb chcesz losować : "))
-	maksliczba = int(input("Podaj maksymalną losowaną liczbę: "))
-	if ileliczb > maksliczba :
-		exit("Błędne dane!")
-except :
-	exit("Błędne dane!")
+# program główny
 
-liczby = []
+# ustalmy trudność gry
+ileliczb, maksliczba, ilerazy = ustawienia()
 
-i = 0
+# losujemy liczby
+liczby = losujliczby(ileliczb, maksliczba)
 
-while i<ileliczb :
-	liczba = random.randint(1, maksliczba)
-	if liczby.count(liczba)==0 :
-		liczby.append(liczba)
-		i = i + 1
+# pobieramy typy użytkownika i sprawdzamy ile liczb trafił
 		
-for n in range(3) :
+for i in range(ilerazy) :
 	
-
-	print("Wytypuj", ileliczb, "z", maksliczba, "liczb")
-	typy=set()
-
-	i = 0
-
-	while i<ileliczb :
-		try :
-			typ = int(input("Podaj liczbę " + str(i+1) + ": "))
-		except ValueError :
-			print("Błędne dane")
-			continue
-			
-		if 0 < typ <= maksliczba and typ not in typy :
-			typy.add(typ)
-			i = i + 1
-
+	typy = pobierztypy(ileliczb, maksliczba)
 	trafione = set(liczby) & typy
 
-	if len(trafione)>0 :
+	if trafione :
 		print("\nIlość trafień:", len(trafione))
 		print("Trafione liczby to :", str(trafione).strip('[]'))
 	else :
