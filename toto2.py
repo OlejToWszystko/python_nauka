@@ -3,8 +3,15 @@
 
 import random
 
-ileliczb = int(input("Podaj ile liczb chcesz losować : "))
-maksliczba = int(input("Podaj maksymalną losowaną liczbę: "))
+try :
+	
+	ileliczb = int(input("Podaj ile liczb chcesz losować : "))
+	maksliczba = int(input("Podaj maksymalną losowaną liczbę: "))
+	if ileliczb > maksliczba :
+		exit("Błędne dane!")
+except :
+	exit("Błędne dane!")
+
 liczby = []
 
 i = 0
@@ -24,13 +31,16 @@ for n in range(3) :
 	i = 0
 
 	while i<ileliczb :
-		typ = int(input("Podaj liczbę " + str(i+1) + ": "))
-		if typ not in typy :
+		try :
+			typ = int(input("Podaj liczbę " + str(i+1) + ": "))
+		except ValueError :
+			print("Błędne dane")
+			continue
+			
+		if 0 < typ <= maksliczba and typ not in typy :
 			typy.add(typ)
 			i = i + 1
 
-#print("Wylosowane liczby : ",liczby)
-#print("Wytypowane liczby :",typy)
 	trafione = set(liczby) & typy
 
 	if len(trafione)>0 :
@@ -39,6 +49,6 @@ for n in range(3) :
 	else :
 		print("Brak trafień")
 	
-	print("\nxxxxxxxxxxxxxxxxxxxxxx")
+	print("\n" + "x"*40 + "\n")
 
-print("\nWylosowane liczby : ",liczby)
+print("Wylosowane liczby : ",liczby)
