@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import random
-import os
+import os, json
 
 
 def ustawienia():
@@ -97,3 +97,17 @@ def wyniki(typy, liczby):
         print("Brak trafień")
 
     print("\n" + "x" * 40 + "\n")
+    return len(trafione)
+
+def czytaj_json(nazwapliku):
+	#Funkcja odczytuje dane w formacie json z pliku
+	dane = []
+	if os.path.isfile(nazwapliku):
+		with open(nazwapliku, "r") as plik:
+			dane = json.load(plik)
+	return dane
+
+def zapisz_json(nazwapliku, dane):
+	#Funkcja zapisuje dane w formacie json do pliku
+	with open(nazwapliku, "w") as plik:
+		json.dump(dane, plik)
