@@ -111,3 +111,29 @@ def zapisz_json(nazwapliku, dane):
 	#Funkcja zapisuje dane w formacie json do pliku
 	with open(nazwapliku, "w") as plik:
 		json.dump(dane, plik)
+
+def czytaj_str(nazwapliku):
+	#Funkcja odczytuje dane w formacie txt z pliku
+	dane = []
+	slownik = {}
+	if os.path.isfile(nazwapliku):
+		with open(nazwapliku, "r") as plik:
+			linie = plik.readlines() 
+			for linia in linie:
+				linia = linia.strip() #usuwa białe znaki
+				wers = linia.split(";")
+				for i in wers:
+					slownik.update([i.split(":")])
+				dane.append(slownik)
+				slownik = {}
+	return dane
+
+def zapisz_str(nazwapliku, dane):
+    """Funkcja zapisuje dane w formacie txt do pliku"""
+    with open(nazwapliku, "w") as plik:
+        for slownik in dane:
+            linia = [k + ":" + str(w) for k, w in slownik.items()]
+            linia = ";".join(linia)
+            # plik.write(linia+"\n") – zamiast tak, można:
+            #print >>plik, linia
+            print(linia, file=plik)
