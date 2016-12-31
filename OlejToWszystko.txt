@@ -1,0 +1,3 @@
+ile:2;czas:1480012874.6062453;wylosowane:[2, 5, 3];dane:(3, 5)
+ile:1;czas:1480012879.7519443;wylosowane:[2, 5, 3];dane:(3, 5)
+ile:3;czas:1480012883.0704935;wylosowane:[2, 5, 3];dane:(3, 5)
