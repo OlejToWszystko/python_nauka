@@ -26,6 +26,54 @@ class Widgety(QWidget, Ui_Widget):
 		for i in range(self.ukladR.count()):
 			self.ukladR.itemAt(i).widget().toggled.connect(self.ustawKanalRBtn)
 		self.suwak.valueChanged.connect(self.zmienKolor)
+		# Lista ComboBox i SpinBox ###
+		self.grupaRBtn.clicked.connect(self.ustawStan)
+		self.listaRGB.activated[str].connect(self.ustawKanalCBox)
+		self.spinRGB.valueChanged[int].connect(self.zmienKolor)
+		# przyciski PushButton ###
+		for btn in self.grupaP.buttons():
+			btn.clicked[bool].connect(self.ustawKanalPBtn)
+		self.grupaPBtn.clicked.connect(self.ustawStan)
+		
+		
+	def ustawStan(self, wartosc):
+		nadawca = self.sender()
+		#self.kanaly = set()
+		if wartosc:
+			self.listaRGB.setEnabled(False)
+			self.spinRGB.setEnabled(False)
+			if nadawca == self.grupaPBtn:
+				self.grupaRBtn.setChecked(False)
+				self.kanaly = set()
+				for i in range(self.ukladP.count()):
+					if self.ukladP.itemAt(i).widget().isChecked():
+						kanal = self.ukladP.itemAt(i).widget().text()
+						self.kanaly.add(kanal)
+			elif nadawca == self.grupaRBtn:
+				self.grupaPBtn.setChecked(False)
+				self.kanaly = set()
+				for i in range(self.ukladR.count()):
+					if self.ukladR.itemAt(i).widget().isChecked():
+						kanal = self.ukladR.itemAt(i).widget().text()
+						self.kanaly.add(kanal)
+		else:
+			self.listaRGB.setEnabled(True)
+			self.spinRGB.setEnabled(True)
+			self.kanaly = set()
+			self.kanaly.add(self.listaRGB.currentText())
+			
+			
+	def ustawKanalPBtn(self, wartosc):
+		nadawca = self.sender()
+		if wartosc:
+			self.kanaly.add(nadawca.text())
+		elif nadawca.text() in self.kanaly:
+			self.kanaly.remove(nadawca.text())
+			
+			
+	def ustawKanalCBox(self, wartosc):
+		self.kanaly = set() # resetujemy zbiór kanałów
+		self.kanaly.add(wartosc)
 		
 		
 	def ustawKanalRBtn(self, wartosc):

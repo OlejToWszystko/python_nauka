@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
 from PyQt5.QtWidgets import QCheckBox, QButtonGroup
 from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
 from PyQt5.QtWidgets import QRadioButton, QGroupBox
+from PyQt5.QtWidgets import QComboBox, QSpinBox
+from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtCore import Qt
 
 
@@ -49,12 +51,10 @@ class Ui_Widget():
 		self.lcd = QLCDNumber()
 		self.lcd.setSegmentStyle(QLCDNumber.Flat)
 		# układ poziomy (splitter) dla slajdera i lcd
-		self.splitter = QSplitter(Qt.Horizontal, self)
-		self.splitter.addWidget(self.suwak)
-		self.splitter.addWidget(self.lcd)
-		self.splitter.setSizes((125,75))
-		ukladH2 = QHBoxLayout()
-		ukladH2.addWidget(self.splitter)
+		ukladH2 = QSplitter(Qt.Horizontal, self)
+		ukladH2.addWidget(self.suwak)
+		ukladH2.addWidget(self.lcd)
+		ukladH2.setSizes((125,75))
 		
 		# przyciski RadioButton
 		self.ukladR = QHBoxLayout()
@@ -71,11 +71,48 @@ class Ui_Widget():
 		ukladH3 = QHBoxLayout()
 		ukladH3.addWidget(self.grupaRBtn)
 		
+		# Lista ComboBox i SpinBox ###
+		self.listaRGB = QComboBox(self)
+		for v in ('R', 'G', 'B'):
+			self.listaRGB.addItem(v)
+		self.listaRGB.setEnabled(False)
+		# SpinBox
+		self.spinRGB = QSpinBox()
+		self.spinRGB.setMinimum(0)
+		self.spinRGB.setMaximum(255)
+		self.spinRGB.setEnabled(False)
+		# układ pionowy dla ComboBox i SpinBox
+		uklad = QVBoxLayout()
+		uklad.addWidget(self.listaRGB)
+		uklad.addWidget(self.spinRGB)
+		# do układu poziomego grupy Radio dodajemy układ ComboBox i SpinBox
+		ukladH3.insertSpacing(1, 25)
+		ukladH3.addLayout(uklad)
+		# koniec ComboBox i SpinBox ###
+		
+		# przyciski PushButton ###
+		self.ukladP = QHBoxLayout()
+		self.grupaP = QButtonGroup()
+		self.grupaP.setExclusive(False)
+		for v in ('R', 'G', 'B'):
+			self.btn = QPushButton(v)
+			self.btn.setCheckable(True)
+			self.grupaP.addButton(self.btn)
+			self.ukladP.addWidget(self.btn)
+		# grupujemy przyciski
+		self.grupaPBtn = QGroupBox('Przyciski RGB')
+		self.grupaPBtn.setLayout(self.ukladP)
+		self.grupaPBtn.setObjectName('Push')
+		self.grupaPBtn.setCheckable(True)
+		self.grupaPBtn.setChecked(False)
+		# koniec PushButton ###
+		
 		# główny układ okna, pionowy
 		ukladOkna = QVBoxLayout()
 		ukladOkna.addLayout(ukladH1)
-		ukladOkna.addLayout(ukladH2)
+		ukladOkna.addWidget(ukladH2)
 		ukladOkna.addLayout(ukladH3)
+		ukladOkna.addWidget(self.grupaPBtn)
 		
 		self.setLayout(ukladOkna)
 		self.setWindowTitle('Widżety')
