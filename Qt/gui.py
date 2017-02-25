@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QSlider, QLCDNumber, QSplitter
 from PyQt5.QtWidgets import QRadioButton, QGroupBox
 from PyQt5.QtWidgets import QComboBox, QSpinBox
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QLabel, QLineEdit
 from PyQt5.QtCore import Qt
 
 
@@ -107,12 +108,35 @@ class Ui_Widget():
 		self.grupaPBtn.setChecked(False)
 		# koniec PushButton ###
 		
+		# etykiety QLabel i pola QLineEdit ###
+		ukladH4 = QHBoxLayout()
+		self.labelR = QLabel('R')
+		self.labelG = QLabel('G')
+		self.labelB = QLabel('B')
+		self.kolorR = QLineEdit('0')
+		self.kolorG = QLineEdit('0')
+		self.kolorB = QLineEdit('0')
+		for v in ('R', 'G', 'B'):
+			label = getattr(self, 'label' + v)
+			kolor = getattr(self, 'kolor' + v)
+			if v == 'R':
+				label.setStyleSheet("QWidget { font-weight: bold }")
+				kolor.setEnabled(True)
+			else:
+				label.setStyleSheet("QWidget { font-weight: normal }")
+				kolor.setEnabled(False)
+			ukladH4.addWidget(label)
+			ukladH4.addWidget(kolor)
+			kolor.setMaxLength(3)
+		# koniec QLabel i QLineEdit ###
+		
 		# główny układ okna, pionowy
 		ukladOkna = QVBoxLayout()
 		ukladOkna.addLayout(ukladH1)
 		ukladOkna.addWidget(ukladH2)
 		ukladOkna.addLayout(ukladH3)
 		ukladOkna.addWidget(self.grupaPBtn)
+		ukladOkna.addLayout(ukladH4)
 		
 		self.setLayout(ukladOkna)
 		self.setWindowTitle('Widżety')
